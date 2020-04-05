@@ -38,7 +38,7 @@
               <v-btn block text to="/cart">Cart</v-btn>
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item v-if="user.roles && user.roles.admin">
             <v-list-item-title>
               <v-btn block text to="/inventory">Inventory</v-btn>
             </v-list-item-title>
@@ -56,7 +56,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { db } from '../plugins/firebase'
 
 export default {
   name: 'NavBar',
@@ -70,17 +69,11 @@ export default {
       user: 'getUser',
     }),
   },
-  beforeUpdate() {
-    this.bind()
-  },
   methods: {
     async logOut() {
       await this.$firebase.auth().signOut()
       this.setUser('')
       this.$router.push('/')
-    },
-    async bind() {
-      await this.$bind('cart', db.collection('cart').doc(this.user.uid))
     },
     ...mapActions(['setUser']),
   },

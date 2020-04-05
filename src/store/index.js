@@ -23,7 +23,7 @@ const store = new Vuex.Store({
           displayName: user.displayName,
           email: user.email,
           roles: {
-            subscriber: true,
+            user: true,
           },
           lastAccess: new Date(),
         }
